@@ -2,7 +2,6 @@ import subprocess
 import discord
 from discord.ext import commands
 import logging
-import pytube
 import os
 from dotenv import load_dotenv
 from LoggerGenerator import LoggerGenerator
