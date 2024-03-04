@@ -8,7 +8,7 @@ from LoggerGenerator import LoggerGenerator
 from pytube import YouTube
 
 # set up logging
-LOG = LoggerGenerator.create_logger('coda', log_level=logging.INFO)
+LOG = LoggerGenerator.create_logger("coda", log_level=logging.INFO)
 
 # grab env vars
 load_dotenv()
@@ -17,13 +17,14 @@ DISCORD_KEY = os.getenv("DISCORD_KEY")
 # set up the bot
 intents = discord.Intents.default()
 intents.message_content = True
-bot = commands.Bot(command_prefix='!', intents=intents, log_level=logging.INFO)
+bot = commands.Bot(command_prefix="!", intents=intents, log_level=logging.INFO)
 
 
 @bot.event
 async def on_ready():
     LOG.info("bot logged in as %s", bot.user)
     # await bot.tree.sync()
+
 
 @bot.tree.command(
     name="rip",
@@ -38,14 +39,14 @@ async def rip(interaction: discord.Interaction, url: str):
         audio_stream = yt.streams.filter(only_audio=True).first()
         output_file = audio_stream.download(filename_prefix="coda_")
         base, ext = os.path.splitext(output_file)
-        new_file = base + '.mp3'
+        new_file = base + ".mp3"
 
         # Use ffmpeg to convert the file to mp3
         cmd = f'ffmpeg -i "{output_file}" -vn -ab 128k -ar 44100 -y "{new_file}"'
         subprocess.run(cmd, shell=True)
 
         # Check the size of the file
-        if os.path.getsize(new_file) > 8e+6:  # Adjusted to 8MB for Discord limit
+        if os.path.getsize(new_file) > 8e6:  # Adjusted to 8MB for Discord limit
             LOG.info("%s too large", new_file)
             response = "File too large to send, sorry!"
             await interaction.followup.send(content=response)
@@ -57,9 +58,8 @@ async def rip(interaction: discord.Interaction, url: str):
 
         os.remove(new_file)
         os.remove(output_file)
-    except Exception as e:
+    except Exception:
         await interaction.followup.send(content=f"I wasn't able to rip that!")
 
+
 bot.run(DISCORD_KEY)
-
-
