@@ -24,7 +24,7 @@ bot = commands.Bot(command_prefix="!", intents=intents, log_level=logging.INFO)
 @bot.event
 async def on_ready():
     LOG.info("bot logged in as %s", bot.user)
-    # await bot.tree.sync()
+    await bot.tree.sync()
 
 
 @bot.tree.command(
@@ -66,7 +66,7 @@ async def rip(interaction: discord.Interaction, url: str):
 @bot.tree.command(
     name="rip_from_timestamp",
     description=(
-        "Grab five seconds of audio from a youtube link, with or without a timestamp."
+        "Rip five seconds of audio from a yt link with timestamp"
         "  Please do not rip copyrighted material."
     ),
 )
