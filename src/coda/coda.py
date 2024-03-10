@@ -84,7 +84,7 @@ async def rip_from_timestamp(interaction: discord.Interaction, url: str):
         base, ext = os.path.splitext(output_file)
         new_file = base + ".mp3"
 
-        cmd = f'ffmpeg -ss {start_seconds} -i "{output_file}" -t 5 -vn -ab 128k -ar 44100 -y "{new_file}"'
+        cmd = f'ffmpeg -ss {start_seconds} -i "{output_file}" -t 4.8 -vn -ab 128k -ar 44100 -y "{new_file}"'
         subprocess.run(cmd, shell=True)
 
         # Check the size of the file
