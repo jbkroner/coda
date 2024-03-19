@@ -7,6 +7,7 @@ import os
 from dotenv import load_dotenv
 from LoggerGenerator import LoggerGenerator
 from pytube import YouTube
+from pytube.exceptions import AgeRestrictedError
 
 # set up logging
 LOG = LoggerGenerator.create_logger("coda", log_level=logging.INFO)
@@ -59,8 +60,17 @@ async def rip(interaction: discord.Interaction, url: str):
 
         os.remove(new_file)
         os.remove(output_file)
-    except Exception:
-        await interaction.followup.send(content=f"I wasn't able to rip that!")
+
+    except AgeRestrictedError as e:
+        LOG.error(f"{type(e)} Error ripping audio: {e}")
+        await interaction.followup.send(
+            content=f"{yt.title} is age-restricted! I can't rip it."
+        )
+    except Exception as e:
+        LOG.error(f"{type(e)} Error ripping audio: {e}")
+        await interaction.followup.send(
+            content=f"I wasn't able to rip that! Reason: {e}"
+        )
 
 
 @bot.tree.command(
@@ -100,9 +110,17 @@ async def rip_from_timestamp(interaction: discord.Interaction, url: str):
 
         os.remove(new_file)  # Clean up after sending
         os.remove(output_file)
+
+    except AgeRestrictedError as e:
+        LOG.error(f"{type(e)} Error ripping audio: {e}")
+        await interaction.followup.send(
+            content=f"{yt.title} is age-restricted! I can't rip it."
+        )
     except Exception as e:
-        LOG.error(f"Error ripping audio: {e}")
-        await interaction.followup.send(content=f"I wasn't able to rip that!")
+        LOG.error(f"{type(e)} Error ripping audio: {e}")
+        await interaction.followup.send(
+            content=f"I wasn't able to rip that! Reason: {e}"
+        )
 
 
 bot.run(DISCORD_KEY)
