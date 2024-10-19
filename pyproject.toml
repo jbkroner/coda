@@ -4,11 +4,12 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "coda"
+version = "1.0.0"
 authors = [{ name = "Jim Kroner" }]
 readme = "README.md"
 license = { file = "LICENSE" }
 classifiers = ["License :: OSI Approved :: MIT License"]
-dynamic = ["version", "description"]
+dynamic = ["description"]
 dependencies = ["discord.py~=2.4", "pytube~=15.0", "python-dotenv~=1.0"]
 
 [project.optional-dependencies]
