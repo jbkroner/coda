@@ -1,9 +1,10 @@
-import re
-import subprocess
-import discord
-from discord.ext import commands
 import logging
 import os
+import re
+import subprocess
+
+import discord
+from discord.ext import commands
 from dotenv import load_dotenv
 from LoggerGenerator import LoggerGenerator
 from pytube import YouTube
@@ -63,14 +64,10 @@ async def rip(interaction: discord.Interaction, url: str):
 
     except AgeRestrictedError as e:
         LOG.error(f"{type(e)} Error ripping audio: {e}")
-        await interaction.followup.send(
-            content=f"{yt.title} is age-restricted! I can't rip it."
-        )
+        await interaction.followup.send(content=f"{yt.title} is age-restricted! I can't rip it.")
     except Exception as e:
         LOG.error(f"{type(e)} Error ripping audio: {e}")
-        await interaction.followup.send(
-            content=f"I wasn't able to rip that! Reason: {e}"
-        )
+        await interaction.followup.send(content=f"I wasn't able to rip that! Reason: {e}")
 
 
 @bot.tree.command(
@@ -113,14 +110,10 @@ async def rip_from_timestamp(interaction: discord.Interaction, url: str):
 
     except AgeRestrictedError as e:
         LOG.error(f"{type(e)} Error ripping audio: {e}")
-        await interaction.followup.send(
-            content=f"{yt.title} is age-restricted! I can't rip it."
-        )
+        await interaction.followup.send(content=f"{yt.title} is age-restricted! I can't rip it.")
     except Exception as e:
         LOG.error(f"{type(e)} Error ripping audio: {e}")
-        await interaction.followup.send(
-            content=f"I wasn't able to rip that! Reason: {e}"
-        )
+        await interaction.followup.send(content=f"I wasn't able to rip that! Reason: {e}")
 
 
 bot.run(DISCORD_KEY)
