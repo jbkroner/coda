@@ -4,9 +4,26 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "coda"
+version = "1.0.0"
 authors = [{ name = "Jim Kroner" }]
 readme = "README.md"
 license = { file = "LICENSE" }
 classifiers = ["License :: OSI Approved :: MIT License"]
-dynamic = ["version", "description"]
-dependencies = ["discord.py", "pytube", "python-dotenv"]
+dynamic = ["description"]
+dependencies = ["discord.py~=2.4", "pytube~=15.0", "python-dotenv~=1.0"]
+
+[project.optional-dependencies]
+dev = ["pre-commit~=3.8.0", "ruff~=0.7", "black~=24.10"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.black]
+line-length = 100
+target-version = ["py312"]
+include = "\\.pyi?$"
+extend-exclude = "/(\n  # directories\n  \\.eggs\n  | \\.git\n  | \\.hg\n  | \\.mypy_cache\n  | \\.tox\n  | \\.venv\n  | build\n  | dist\n)/\n"
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+ignore = ["E501"]
